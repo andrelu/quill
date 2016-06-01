@@ -1,9 +1,10 @@
 package io.getquill.quotation
 
-import io.getquill.Spec
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
 import io.getquill.ast._
 
-class IsDynamicSpec extends Spec {
+class IsDynamicSpec extends SourceSpec(mirrorSource) {
 
   "detects if the quotation has dynamic parts" - {
     "true" - {

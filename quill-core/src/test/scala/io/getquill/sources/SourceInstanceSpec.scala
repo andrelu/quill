@@ -1,13 +1,15 @@
 package io.getquill.sources
 
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
 import io.getquill._
-import io.getquill.TestSource.mirrorSource
+
 import io.getquill.sources.mirror.Row
 
 case class WrappedEncodable(value: Int)
   extends AnyVal with WrappedValue[Int]
 
-class SourceSpec extends Spec {
+class SourceInstanceSpec extends SourceSpec(mirrorSource) {
 
   "provides mapped encoding" - {
 

@@ -1,10 +1,11 @@
 package io.getquill.sources
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
 import io.getquill.sources.mirror.Row
-import io.getquill.TestSource.mirrorSource
 
-class EncodeBindVariablesSpec extends Spec {
+class EncodeBindVariablesSpec extends SourceSpec(mirrorSource) {
 
   "encodes bind variables" - {
     "one" in {
@@ -29,7 +30,7 @@ class EncodeBindVariablesSpec extends Spec {
   }
 
   "uses a custom implicit encoder" in {
-    implicit val doubleEncoder = new Encoder[Row, Double] {
+    implicit val doubleEncoder = new mirrorSource.Encoder[Double] {
       override def apply(index: Int, value: Double, row: Row) =
         row.add(value)
     }

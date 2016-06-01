@@ -3,12 +3,10 @@ package io.getquill.sources
 import java.util.Date
 
 import scala.BigDecimal
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.SourceSpec
 
-import io.getquill.Spec
-import io.getquill.query
-import io.getquill.quote
-
-class EncodingSpec extends Spec {
+abstract class EncodingSpec(source: Source[_, _]) extends SourceSpec(source) {
 
   case class EncodingTestEntity(
     v1:  String,

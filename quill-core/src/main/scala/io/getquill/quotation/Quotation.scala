@@ -8,10 +8,7 @@ import scala.reflect.macros.whitebox.Context
 import io.getquill.ast._
 
 import scala.reflect.NameTransformer
-
-trait Quoted[+T] {
-  def ast: Ast
-}
+import io.getquill.Quoted
 
 case class QuotedAst(ast: Ast) extends StaticAnnotation
 
@@ -91,12 +88,12 @@ trait Quotation extends Liftables with Unliftables with Parsing {
   def doubleQuote[T: WeakTypeTag](body: Expr[Quoted[T]]) =
     body.tree match {
       case q"null" => c.fail("Can't quote null")
-      case tree    => q"io.getquill.unquote($tree)"
+      case tree    => q"${c.prefix}.unquote($tree)"
     }
 
   def quotedFunctionBody(func: Expr[Any]) =
     func.tree match {
-      case q"(..$p) => $b" => q"io.getquill.quote((..$p) => io.getquill.unquote($b))"
+      case q"(..$p) => $b" => q"${c.prefix}.quote((..$p) => ${c.prefix}.unquote($b))"
     }
 
   protected def unquote[T](tree: Tree)(implicit ct: ClassTag[T]) =

@@ -1,11 +1,13 @@
 package io.getquill.ast
 
-import io.getquill._
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.SourceSpec
 import io.getquill.{ Query => QueryInterface }
 import io.getquill.ast.AstShow.astShow
 import io.getquill.util.Show.Shower
 
-class AstShowSpec extends Spec {
+class AstShowSpec extends SourceSpec(mirrorSource) {
 
   import io.getquill.util.Show._
   import io.getquill.ast.AstShow._

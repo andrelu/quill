@@ -1,12 +1,15 @@
 package io.getquill.sources
 
-import io.getquill.quotation.Quoted
-import io.getquill._
-import io.getquill.TestSource.mirrorSource
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
+
 import mirror.Row
 import scala.reflect.ClassTag
+import io.getquill.Quoted
+import io.getquill.Quoted
 
-class SourceMacroSpec extends Spec {
+class SourceMacroSpec extends SourceSpec(mirrorSource) {
 
   "runs actions" - {
     "non-parametrized" - {
@@ -173,7 +176,7 @@ class SourceMacroSpec extends Spec {
   }
 
   "can be used as a var" in {
-    var db = source(new MirrorSourceConfig(""))
+    var db = mirrorSource
     db.run(qr1)
     ()
   }

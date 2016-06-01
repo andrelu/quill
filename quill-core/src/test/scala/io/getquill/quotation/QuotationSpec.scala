@@ -1,10 +1,13 @@
 package io.getquill.quotation
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 import io.getquill.ast.{ Query => _, _ }
 import scala.reflect.ClassTag
+import io.getquill.Quoted
 
-class QuotationSpec extends Spec {
+class QuotationSpec extends SourceSpec(mirrorSource) {
 
   "quotes and unquotes asts" - {
 

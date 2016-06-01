@@ -1,11 +1,12 @@
 package io.getquill.sources
 
-import io.getquill._
 import io.getquill.sources.mirror.Row
-import io.getquill.TestSource.mirrorSource
 import io.getquill.ast.Function
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.SourceSpec
 
-class ActionMacroSpec extends Spec {
+class ActionMacroSpec extends SourceSpec(mirrorSource) {
 
   "runs non-batched action" - {
     "normal" in {

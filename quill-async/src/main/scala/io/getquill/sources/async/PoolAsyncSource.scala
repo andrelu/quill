@@ -1,21 +1,28 @@
 package io.getquill.sources.async
 
+import com.github.mauricio.async.db.Configuration
 import com.github.mauricio.async.db.Connection
-import io.getquill.naming.NamingStrategy
-import io.getquill.sources.sql.idiom.SqlIdiom
-
+import com.github.mauricio.async.db.pool.ObjectFactory
+import com.github.mauricio.async.db.pool.PartitionedConnectionPool
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
+import io.getquill.sources.sql.idiom.SqlIdiom
+import io.getquill.naming.NamingStrategy
 
-class PoolAsyncSource[D <: SqlIdiom, N <: NamingStrategy, C <: Connection](config: AsyncSourceConfig[D, N, C])
-  extends AsyncSource[D, N, C](config) {
+abstract class PoolAsyncSource[D <: SqlIdiom, N <: NamingStrategy, C <: Connection](config: AsyncSourceConfig, connectionFactory: Configuration => ObjectFactory[C])
+  extends AsyncSource[D, N, C] {
 
-  private val pool = config.pool
-
-  def connection: Connection = config.pool
+  override protected val connection =
+    new PartitionedConnectionPool[C](
+      connectionFactory(config.configuration),
+      config.poolConfiguration,
+      config.numberOfPartitions
+    )
 
   override def close = {
-    Await.result(pool.close, Duration.Inf)
+    Await.result(connection.close, Duration.Inf)
     ()
   }
+
 }
+

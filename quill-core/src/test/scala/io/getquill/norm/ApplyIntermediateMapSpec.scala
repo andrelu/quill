@@ -1,8 +1,10 @@
 package io.getquill.norm
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 
-class ApplyIntermediateMapSpec extends Spec {
+class ApplyIntermediateMapSpec extends SourceSpec(mirrorSource) {
 
   "avoids applying the intermmediate map after a groupBy" - {
     "flatMap" in {

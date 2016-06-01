@@ -1,8 +1,10 @@
 package io.getquill.norm
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 
-class OrderTermsSpec extends Spec {
+class OrderTermsSpec extends SourceSpec(mirrorSource) {
 
   "doesn't reorder groupBy.map" in {
     val q = quote {

@@ -1,16 +1,19 @@
-package io.getquill
+package io.getquill.sources.async
 
 import com.github.mauricio.async.db.{ QueryResult => DBQueryResult }
 import com.github.mauricio.async.db.postgresql.PostgreSQLConnection
 import com.github.mauricio.async.db.postgresql.pool.PostgreSQLConnectionFactory
 import io.getquill.naming.NamingStrategy
-import io.getquill.sources.SourceConfig
-import io.getquill.sources.async.{ AsyncSourceConfig, PoolAsyncSource }
 import io.getquill.sources.sql.idiom.PostgresDialect
+import com.github.mauricio.async.db.{ QueryResult => DBQueryResult }
+import com.typesafe.config.Config
+import io.getquill.util.LoadConfig
 
-class PostgresAsyncSourceConfig[N <: NamingStrategy](name: String)
-  extends AsyncSourceConfig[PostgresDialect, N, PostgreSQLConnection](name, new PostgreSQLConnectionFactory(_))
-  with SourceConfig[PoolAsyncSource[PostgresDialect, N, PostgreSQLConnection]] {
+class PostgresAsyncSource[N <: NamingStrategy](config: AsyncSourceConfig)
+  extends PoolAsyncSource[PostgresDialect, N, PostgreSQLConnection](config, new PostgreSQLConnectionFactory(_)) {
+
+  def this(config: Config) = this(AsyncSourceConfig(config))
+  def this(configPrefix: String) = this(LoadConfig(configPrefix))
 
   def extractActionResult(generated: Option[String])(result: DBQueryResult): Long = (generated, result) match {
     case (None, r) =>

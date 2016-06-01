@@ -8,7 +8,9 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{ Await, Future }
 import scala.concurrent.ExecutionContext.Implicits.{ global => ec }
 
-class PoolAsyncSourceSpec extends Spec {
+class PoolAsyncSourceSpec extends SourceSpec(testMysqlDB) {
+
+  import testMysqlDB._
 
   def await[T](f: Future[T]) = Await.result(f, Duration.Inf)
 

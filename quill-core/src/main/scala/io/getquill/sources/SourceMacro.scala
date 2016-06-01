@@ -4,12 +4,12 @@ import scala.reflect.macros.whitebox.Context
 import io.getquill._
 import io.getquill.ast.{ Action => _, Query => _, _ }
 import io.getquill.quotation.Quotation
-import io.getquill.quotation.Quoted
+import io.getquill.Quoted
 import io.getquill.quotation.FreeVariables
 import io.getquill.util.Messages._
 import io.getquill.quotation.Bindings
 
-trait SourceMacro extends Quotation with ActionMacro with QueryMacro with ResolveSourceMacro {
+trait SourceMacro extends Quotation with ActionMacro with QueryMacro with QueryProbingMacro {
   val c: Context
   import c.universe.{ Function => _, Ident => _, _ }
 

@@ -1,8 +1,10 @@
 package io.getquill.norm
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 
-class NormalizeNestedStructuresSpec extends Spec {
+class NormalizeNestedStructuresSpec extends SourceSpec(mirrorSource) {
 
   "returns Some if a nested structure changes" - {
     "flatMap" in {

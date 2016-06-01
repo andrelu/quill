@@ -1,8 +1,10 @@
 package io.getquill.norm
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
 
-class SymbolicReductionSpec extends Spec {
+class SymbolicReductionSpec extends SourceSpec(mirrorSource) {
 
   "a.filter(b => c).flatMap(d => e.$)" - {
     "e is an entity" in {

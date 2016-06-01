@@ -1,8 +1,10 @@
 package io.getquill.norm.capture
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 
-class DealiasSpec extends Spec {
+class DealiasSpec extends SourceSpec(mirrorSource) {
 
   "ensures that each entity is referenced by the same alias" - {
     "flatMap" in {

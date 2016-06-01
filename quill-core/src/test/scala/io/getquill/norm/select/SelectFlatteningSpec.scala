@@ -1,11 +1,11 @@
 package io.getquill.norm.select
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
 import io.getquill.sources.mirror.Row
-import io.getquill.TestSource.mirrorSource
-import io.getquill.sources.Decoder
 
-class SelectFlatteningSpec extends Spec {
+class SelectFlatteningSpec extends SourceSpec(mirrorSource) {
 
   "flattens the final map (select) of queries" - {
 
@@ -94,7 +94,7 @@ class SelectFlatteningSpec extends Spec {
   "uses a custom implicit decoder" in {
     case class Value(s: String)
     case class Test(v: Value)
-    implicit val valueDecoder = new Decoder[Row, Value] {
+    implicit val valueDecoder = new Decoder[Value] {
       override def apply(index: Int, row: Row) =
         Value(row[String](index))
     }

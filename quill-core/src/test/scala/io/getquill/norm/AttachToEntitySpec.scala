@@ -1,9 +1,11 @@
 package io.getquill.norm
 
 import io.getquill._
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 import io.getquill.ast._
 
-class AttachToEntitySpec extends Spec {
+class AttachToEntitySpec extends SourceSpec(mirrorSource) {
 
   val attachToEntity = AttachToEntity(SortBy(_, _, Constant(1), AscNullsFirst)) _
 

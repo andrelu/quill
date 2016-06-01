@@ -1,8 +1,10 @@
 package io.getquill.norm.capture
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 
-class AvoidCaptureSpec extends Spec {
+class AvoidCaptureSpec extends SourceSpec(mirrorSource) {
 
   "avoids capture of entities for normalization" in {
     val q = quote {

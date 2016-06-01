@@ -1,9 +1,11 @@
 package io.getquill.quotation
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 import io.getquill.ast.Ident
 
-class FreeVariablesSpec extends Spec {
+class FreeVariablesSpec extends SourceSpec(mirrorSource) {
 
   "detects references to values outside of the quotation (free variables)" - {
     "ident" in {

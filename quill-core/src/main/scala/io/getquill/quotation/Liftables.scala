@@ -2,6 +2,7 @@ package io.getquill.quotation
 
 import scala.reflect.macros.whitebox.Context
 import io.getquill.ast.{ CompileTimeBinding, _ }
+import io.getquill.Quoted
 
 trait Liftables {
   val c: Context

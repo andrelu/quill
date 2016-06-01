@@ -1,4 +1,4 @@
-package io
+package io.getquill
 
 import scala.language.implicitConversions
 import language.experimental.macros
@@ -6,9 +6,7 @@ import io.getquill.quotation.NonQuotedException
 import io.getquill.sources._
 import scala.reflect.ClassTag
 
-package object getquill {
-
-  def source[T <: Source[_, _]](config: SourceConfig[T]): T = macro Macro.quoteSource[T]
+trait Ops {
 
   def query[T](implicit ct: ClassTag[T]): EntityQuery[T] = NonQuotedException()
 
@@ -29,15 +27,23 @@ package object getquill {
   implicit def quote[T](body: T): Quoted[T] = macro Macro.quote[T]
   implicit def unquote[T](quoted: Quoted[T]): T = NonQuotedException()
 
-  implicit class InfixInterpolator(val sc: StringContext) extends AnyVal {
+  implicit class InfixInterpolator(val sc: StringContext) {
     def infix(args: Any*): InfixValue = NonQuotedException()
   }
 
   def mappedEncoding[I, O](f: I => O) = MappedEncoding(f)
 
-  type Quoted[T] = quotation.Quoted[T]
-
   def Ord: OrdOps = NonQuotedException()
 
   implicit def implicitOrd[T]: Ord[T] = NonQuotedException()
+
+  type Query[+T] = io.getquill.Query[T]
+  type JoinQuery[A, B, R] = io.getquill.JoinQuery[A, B, R]
+  type EntityQuery[T] = io.getquill.EntityQuery[T]
+  type Schema[T] = io.getquill.Schema[T]
+  type Action[T] = io.getquill.Action[T]
+  type Insert[T] = io.getquill.Insert[T]
+  type Update[T] = io.getquill.Update[T]
+  type Delete[T] = io.getquill.Delete[T]
+  type UnassignedAction[T] = io.getquill.UnassignedAction[T]
 }

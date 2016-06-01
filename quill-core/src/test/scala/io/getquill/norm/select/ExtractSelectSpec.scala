@@ -1,9 +1,11 @@
 package io.getquill.norm.select
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 import io.getquill.ast._
 
-class ExtractSelectSpec extends Spec {
+class ExtractSelectSpec extends SourceSpec(mirrorSource) {
 
   "extracts the final map (select) from a query" - {
     "simple query" in {

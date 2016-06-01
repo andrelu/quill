@@ -1,11 +1,13 @@
 package test
 
-import io.getquill._
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
 import io.getquill.ast.{ Query => _, _ }
 import io.getquill.quotation.NonQuotedException
-import io.getquill.quotation.Quoted
+import io.getquill.Quoted
+import io.getquill.SourceSpec
 
-class PackageSpec extends Spec {
+class OpsSpec extends SourceSpec(mirrorSource) {
 
   "quotes asts" - {
     "explicitly" in {

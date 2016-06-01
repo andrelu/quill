@@ -1,16 +1,21 @@
-package io.getquill
+package io.getquill.sources.async
 
 import com.github.mauricio.async.db.{ QueryResult => DBQueryResult }
-import com.github.mauricio.async.db.mysql.{ MySQLQueryResult, MySQLConnection }
+import com.github.mauricio.async.db.{ QueryResult => DBQueryResult }
+import com.github.mauricio.async.db.mysql.MySQLConnection
+import com.github.mauricio.async.db.mysql.MySQLQueryResult
 import com.github.mauricio.async.db.mysql.pool.MySQLConnectionFactory
-import io.getquill.naming.NamingStrategy
-import io.getquill.sources.SourceConfig
-import io.getquill.sources.async.{ PoolAsyncSource, AsyncSourceConfig }
-import io.getquill.sources.sql.idiom.MySQLDialect
+import com.typesafe.config.Config
 
-class MysqlAsyncSourceConfig[N <: NamingStrategy](name: String)
-  extends AsyncSourceConfig[MySQLDialect, N, MySQLConnection](name, new MySQLConnectionFactory(_))
-  with SourceConfig[PoolAsyncSource[MySQLDialect, N, MySQLConnection]] {
+import io.getquill.naming.NamingStrategy
+import io.getquill.sources.sql.idiom.MySQLDialect
+import io.getquill.util.LoadConfig
+
+class MysqlAsyncSource[N <: NamingStrategy](config: AsyncSourceConfig)
+  extends PoolAsyncSource[MySQLDialect, N, MySQLConnection](config, new MySQLConnectionFactory(_)) {
+
+  def this(config: Config) = this(AsyncSourceConfig(config))
+  def this(configPrefix: String) = this(LoadConfig(configPrefix))
 
   def extractActionResult(generated: Option[String])(result: DBQueryResult): Long = {
     (generated, result) match {

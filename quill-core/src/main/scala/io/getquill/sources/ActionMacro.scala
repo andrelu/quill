@@ -48,7 +48,7 @@ trait ActionMacro extends EncodingMacro {
       val (sql, bindings: List[io.getquill.ast.Ident], generated) =
         ${prepare(action, idents)}
 
-      ${c.prefix}.execute(
+      ${c.prefix}.executeAction(
         sql,
         $encodedParams(bindings.map(_.name)),
         generated
@@ -64,7 +64,7 @@ trait ActionMacro extends EncodingMacro {
       val (sql, bindings: List[io.getquill.ast.Ident], generated) =
         ${prepare(action, idents)}
 
-      ${c.prefix}.executeBatch[(..$paramsTypes)](
+      ${c.prefix}.executeActionBatch[(..$paramsTypes)](
         sql,
         value => $encodedParams(bindings.map(_.name)),
         generated

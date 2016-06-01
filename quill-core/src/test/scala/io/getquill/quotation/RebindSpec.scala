@@ -1,9 +1,11 @@
 package io.getquill.quotation
 
-import io.getquill._
-import io.getquill.TestSource.mirrorSource
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
 
-class RebindSpec extends Spec {
+class RebindSpec extends SourceSpec(mirrorSource) {
+
   "rebind non-arg function" - {
     "with type param" in {
       implicit class ReturnId[T](action: Action[T]) {

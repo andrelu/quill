@@ -6,6 +6,7 @@ import io.getquill.ast._
 import io.getquill.norm.BetaReduction
 import io.getquill.util.Messages.RichContext
 import io.getquill.util.Interleave
+import io.getquill.Quoted
 
 trait Parsing extends EntityConfigParsing {
   this: Quotation =>
@@ -149,7 +150,7 @@ trait Parsing extends EntityConfigParsing {
     case q"$pack.query[$_]($ct)" =>
       Dynamic {
         c.typecheck(q"""
-          new io.getquill.quotation.Quoted[EntityQuery[T]] {
+          new io.getquill.Quoted[EntityQuery[T]] {
             override def ast = io.getquill.ast.SimpleEntity($ct.runtimeClass.getSimpleName)
           }  
         """)

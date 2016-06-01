@@ -1,8 +1,10 @@
 package io.getquill.norm
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 
-class NormalizeSpec extends Spec {
+class NormalizeSpec extends SourceSpec(mirrorSource) {
 
   "normalizes random-generated queries" - {
     val gen = new QueryGenerator(1)

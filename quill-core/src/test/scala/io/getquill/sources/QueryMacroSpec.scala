@@ -1,11 +1,13 @@
 package io.getquill.sources
 
 import io.getquill._
+import io.getquill.sources.mirror.mirrorSource._
+import io.getquill.sources.mirror.mirrorSource
 import io.getquill.sources.mirror.Row
-import io.getquill.TestSource.mirrorSource
+
 import io.getquill.ast.Function
 
-class QueryMacroSpec extends Spec {
+class QueryMacroSpec extends SourceSpec(mirrorSource) {
 
   "runs non-binded query" in {
     val q = quote {

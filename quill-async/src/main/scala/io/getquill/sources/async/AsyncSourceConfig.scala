@@ -1,19 +1,12 @@
 package io.getquill.sources.async
 
-import com.github.mauricio.async.db.{ Configuration, Connection, QueryResult }
-import com.github.mauricio.async.db.pool.{ ObjectFactory, PartitionedConnectionPool, PoolConfiguration }
-import io.getquill.naming.NamingStrategy
-import io.getquill.sources.SourceConfig
-import io.getquill.sources.sql.idiom.SqlIdiom
+import com.github.mauricio.async.db.pool.PoolConfiguration
 
 import scala.util.Try
+import com.typesafe.config.Config
+import com.github.mauricio.async.db.Configuration
 
-abstract class AsyncSourceConfig[D <: SqlIdiom, N <: NamingStrategy, C <: Connection](
-  val name:          String,
-  connectionFactory: Configuration => ObjectFactory[C]
-) {
-
-  this: SourceConfig[_] =>
+case class AsyncSourceConfig(config: Config) {
 
   def user = config.getString("user")
   def password = Try(config.getString("password")).toOption
@@ -32,10 +25,6 @@ abstract class AsyncSourceConfig[D <: SqlIdiom, N <: NamingStrategy, C <: Connec
 
   private val defaultPoolConfig = PoolConfiguration.Default
 
-  def extractActionResult(generated: Option[String])(result: QueryResult): Long
-
-  def expandAction(sql: String, generated: Option[String]) = sql
-
   def poolMaxObjects = Try(config.getInt("poolMaxObjects")).getOrElse(defaultPoolConfig.maxObjects)
   def poolMaxIdle = Try(config.getLong("poolMaxIdle")).getOrElse(defaultPoolConfig.maxIdle)
   def poolMaxQueueSize = Try(config.getInt("poolMaxQueueSize")).getOrElse(defaultPoolConfig.maxQueueSize)
@@ -50,11 +39,4 @@ abstract class AsyncSourceConfig[D <: SqlIdiom, N <: NamingStrategy, C <: Connec
     )
 
   def numberOfPartitions = Try(config.getInt("poolNumberOfPartitions")).getOrElse(4)
-
-  def pool =
-    new PartitionedConnectionPool[C](
-      connectionFactory(configuration),
-      poolConfiguration,
-      numberOfPartitions
-    )
 }

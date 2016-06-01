@@ -1,8 +1,10 @@
 package io.getquill.norm
 
-import io.getquill._
+import io.getquill.SourceSpec
+import io.getquill.sources.mirror.mirrorSource
+import io.getquill.sources.mirror.mirrorSource._
 
-class AdHocReductionSpec extends Spec {
+class AdHocReductionSpec extends SourceSpec(mirrorSource) {
 
   "filter.filter" - {
     "a.filter(b => c).filter(d => e)" in {
